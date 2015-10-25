@@ -17,6 +17,8 @@ class TestController extends Controller
     {
         $Beatles = ['John', 'Paul', 'George', 'Ringo'];
 
+        alert()->error('Problem', 'Cannot hear');
+
 	    return view('test.index', compact('Beatles'));
 
     }
