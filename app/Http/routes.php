@@ -11,24 +11,38 @@
 |
 */
 
-// Authentication routes…
+// API routes
+
+Route::any('api/widget', 'ApiController@widgetData');
+
+// Authentication routes
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-// Registration routes…
-
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
-
-//forgot password routes…
+// forgot password routes
 
 Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 
-
+// pages routes
 
 Route::get('/', 'PagesController@index');
+
+// Registration routes
+
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+// test routes
+
 Route::get('test','TestController@index');
+
+// widget routes
+
+Route::get('widget/create', ['as' => 'widget.create', 'uses' => 'WidgetController@create']);
+Route::get( 'widget/{id}-{slug?}', ['as' => 'widget.show', 'uses' => 'WidgetController@show']);
+Route::resource('widget', 'WidgetController', ['except' => ['show', 'create']]);
+

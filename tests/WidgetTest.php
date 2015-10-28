@@ -3,17 +3,22 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Widget;
 
-class ExampleTest extends TestCase
+class WidgetTest extends TestCase
 {
+
+    //use DatabaseTransactions;
+
     /**
      * A basic functional test example.
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testWidgetFactory()
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+        $widgets = factory(Widget::class, 50)->create();
+        //dd($widgets);
     }
 }
+
