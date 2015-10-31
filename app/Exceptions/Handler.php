@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Exceptions\UnauthorizedException;
+use App\Exceptions\NoActiveAccountException;
 
 class Handler extends ExceptionHandler
 {
@@ -54,6 +56,16 @@ class Handler extends ExceptionHandler
                 return $this->renderException($e);
                 break;
 
+            case ($e instanceof UnauthorizedException):
+
+                return $this->renderException($e);
+                break;
+
+            case ($e instanceof NoActiveAccountException):
+
+                return $this->renderException($e);
+                break;
+
             default:
 
                 return parent::render($request, $e);
@@ -73,6 +85,14 @@ class Handler extends ExceptionHandler
 
             case ($e instanceof ModelNotFoundException):
                 return response()->view('errors.404', [], 404);
+                break;
+
+            case ($e instanceof UnauthorizedException):
+                return response()->view('errors.unauthorized');
+                break;
+
+            case ($e instanceof NoActiveAccountException):
+                return response()->view('errors.noactiveaccount');
                 break;
 
             default:

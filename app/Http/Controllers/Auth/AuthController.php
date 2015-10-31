@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Exceptions\NoActiveAccountException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -43,10 +46,16 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+
+        $data['is_subscribed'] = empty($data['is_subscribed']) ? 0 : 1;
+        $data['terms'] = empty($data['terms']) ? 0 : 1;
+
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'is_subscribed' => 'boolean',
             'password' => 'required|confirmed|min:6',
+            'terms' => 'accepted'
         ]);
     }
 
@@ -58,10 +67,77 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
+        $data['is_subscribed'] = empty($data['is_subscribed']) ? 0 : 1;
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'is_subscribed' => $data['is_subscribed'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    private function checkStatusLevel()
+    {
+        if (Auth::user()->status_id != 10) {
+
+            Auth::logout();
+
+            throw new NoActiveAccountException;
+
+
+        }
+    }
+
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->loginUsername() => 'required', 'password' => 'required',
+        ]);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $this->hasTooManyLoginAttempts($request)) {
+            return $this->sendLockoutResponse($request);
+        }
+
+        $credentials = $this->getCredentials($request);
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+
+            $this->checkStatusLevel();
+
+            return $this->handleUserWasAuthenticated($request, $throttles);
+
+
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        if ($throttles) {
+            $this->incrementLoginAttempts($request);
+        }
+
+        return redirect($this->loginPath())
+            ->withInput($request->only($this->loginUsername(), 'remember'))
+            ->withErrors([
+                $this->loginUsername() => $this->getFailedLoginMessage(),
+            ]);
+    }
+
+    //overwrite the method from the RedirectrsUsers trait
+    public function redirectPath()
+    {
+
+        if (Auth::user()->is_admin == true){
+
+            return 'admin';
+        }
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
     }
 }

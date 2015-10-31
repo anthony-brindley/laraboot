@@ -11,6 +11,10 @@
 |
 */
 
+// admin routes
+
+Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+
 // API routes
 
 Route::any('api/widget', 'ApiController@widgetData');
@@ -38,7 +42,8 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 // test routes
 
-Route::get('test','TestController@index');
+//Route::get('test','TestController@index');
+Route::get('test',  ['middleware' => 'auth', 'uses' => 'TestController@index']);
 
 // widget routes
 

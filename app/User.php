@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\AuthTraits\OwnsRecord;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -14,7 +15,7 @@ class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable, Authorizable, CanResetPassword, OwnsRecord;
 
     /**
      * The database table used by the model.
@@ -28,7 +29,13 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name',
+                           'email',
+                           'is_subscribed',
+                           'is_admin',
+                           'user_type_id',
+                           'status_id',
+                           'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
