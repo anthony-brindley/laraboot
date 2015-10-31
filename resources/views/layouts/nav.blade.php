@@ -31,6 +31,14 @@
                 @else
                     <li><a href="/auth/login">Login</a></li>
                     <li><a href="/auth/register">Register</a></li>
+                    <li>
+
+                        <a href="/auth/facebook" class="btn btn-primary btn-xs">
+                            <i class="fa fa-facebook"></i>&nbsp;&nbsp; Sign in or Register </a>
+
+
+
+                    </li>
 
                 @endif
             </ul>

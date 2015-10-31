@@ -18,14 +18,16 @@ class PagesController extends Controller
         return view('pages.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function privacy()
     {
-        //
+        return view('pages.privacy');
+    }
+
+
+    public function terms()
+    {
+        return view('pages.termsofservice');
     }
 
     /**

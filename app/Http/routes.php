@@ -33,7 +33,14 @@ Route::controllers([
 
 // pages routes
 
-Route::get('/', 'PagesController@index');
+Route::get('/', ['as' => 'home', 'uses' => 'PagesController@index']);
+Route::get('privacy', 'PagesController@privacy');
+Route::get('termsofservice', 'PagesController@terms');
+
+// Socialite routes
+
+Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
 
 // Registration routes
 

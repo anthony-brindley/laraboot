@@ -25,9 +25,9 @@ class AllowIfAdmin
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check() && $this->auth->user()->status_id == 10)
+        if ($this->auth->check() && $this->auth->user()->isActiveStatus())
         {
-            if ($this->auth->user()->is_admin == 1)
+            if ($this->auth->user()->isAdmin())
             {
 
                 return $next($request);

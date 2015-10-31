@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -31,6 +32,8 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $fillable = ['name',
                            'email',
+                           'facebook_id',
+                           'avatar',
                            'is_subscribed',
                            'is_admin',
                            'user_type_id',
@@ -48,5 +51,17 @@ class User extends Model implements AuthenticatableContract,
     {
 
         return $this->hasMany('App\Widget');
+    }
+
+    public function isAdmin()
+    {
+
+        return Auth::user()->is_admin == 1;
+    }
+
+    public function isActiveStatus()
+    {
+
+        return Auth::user()->status_id == 10;
     }
 }

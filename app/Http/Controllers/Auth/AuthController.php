@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\AuthTraits\ManagesSocial;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,9 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Exceptions\NoActiveAccountException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Exceptions\ConnectionNotAcceptedException;
+use App\Exceptions\EmailNotProvidedException;
+use Socialite;
 
 class AuthController extends Controller
 {
@@ -24,7 +28,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins, ManagesSocial;
 
     private $redirectTo = '/';
 
@@ -80,7 +84,7 @@ class AuthController extends Controller
 
     private function checkStatusLevel()
     {
-        if (Auth::user()->status_id != 10) {
+        if ( ! Auth::user()->isActiveStatus()) {
 
             Auth::logout();
 
@@ -134,10 +138,63 @@ class AuthController extends Controller
     public function redirectPath()
     {
 
-        if (Auth::user()->is_admin == true){
+        if (Auth::user()->isAdmin()){
 
             return 'admin';
         }
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
     }
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+        //->scopes(['public_profile', 'email'])->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        try {
+
+            $socialUser = Socialite::driver('facebook')->user();
+
+        } catch (Exception $e) {
+
+            throw new ConnectionNotAcceptedException;
+        }
+
+        $facebookEmail = $socialUser->getEmail();
+
+        if ($this->socialUserHasNo($facebookEmail)) {
+
+            throw new EmailNotProvidedException;
+        }
+
+        if ($this->socialUserAlreadyLoggedIn()) {
+
+
+            $this->userSyncedOrSync($socialUser);
+
+        }
+
+        $authUser = $this->findOrCreateUser($socialUser);
+
+        Auth::login($authUser, true);
+
+        $this->checkStatusLevel();
+
+        return $this->redirectUser();
+    }
+
+
+
 }
