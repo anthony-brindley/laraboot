@@ -2,6 +2,7 @@
     <table id="widget_table" class="display">
         <thead>
         <tr>
+
             <th>Id</th>
             <th>Slug</th>
             <th>Name</th>

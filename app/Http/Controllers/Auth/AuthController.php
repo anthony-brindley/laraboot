@@ -39,7 +39,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => ['getLogout', 'handleProviderCallback', 'redirectToProvider']]);
+
     }
 
     /**
@@ -163,6 +164,7 @@ class AuthController extends Controller
      */
     public function handleProviderCallback()
     {
+
         try {
 
             $socialUser = Socialite::driver('facebook')->user();
@@ -172,7 +174,11 @@ class AuthController extends Controller
             throw new ConnectionNotAcceptedException;
         }
 
+
+
         $facebookEmail = $socialUser->getEmail();
+
+
 
         if ($this->socialUserHasNo($facebookEmail)) {
 
@@ -187,6 +193,7 @@ class AuthController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($socialUser);
+
 
         Auth::login($authUser, true);
 

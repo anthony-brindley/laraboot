@@ -53,7 +53,7 @@ class WidgetController extends Controller
     public function store(Request $request)
     {
 
-        dd($request);
+
         $this->validate($request, [
             'widget_name' => 'required|unique:widgets|string|max:40',
 

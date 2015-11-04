@@ -19,7 +19,7 @@ trait OwnsRecord
 
     public function adminOrCurrentUserOwns($modelRecord)
     {
-        if (Auth::user()->is_admin == 1){
+        if (Auth::user()->isAdmin()){
 
             return true;
         }
@@ -28,5 +28,7 @@ trait OwnsRecord
 
 
     }
+
+
 
 }

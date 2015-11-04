@@ -5,6 +5,8 @@
 <!-- Bootstrap theme -->
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet">
 
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.min.css" rel="stylesheet">
+
 <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
 <!-- our style -->
 <link href="/css/main.css" rel="stylesheet">

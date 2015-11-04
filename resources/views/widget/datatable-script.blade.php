@@ -24,8 +24,8 @@ headers: {
 { "data": "created_at",
 "render": function ( data, type, full, meta ) {
 var d = new Date(data);
-var month = d.getMonth() +1 < 10 ? "0" + d.getMonth() +1 : d.getMonth() +1;
-var day = d.getDate() < 10 ? "0" + d.getDate(): d.getDate();
+var month = d.getMonth() +1 < 10 ? "0" + (d.getMonth() +1) : d.getMonth() +1;
+var day = d.getDate() +1 < 10 ? "0" + (d.getDate() +1): d.getDate() +1;
 return month + "/" + day + "/" + d.getFullYear();
 }
 },

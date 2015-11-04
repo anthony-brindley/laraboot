@@ -41,10 +41,10 @@ private function findOrCreateUser($facebookUser)
     // if email is in table, does the facebook id match?
     // if there is a match, return $authUser, if not throw exception
 
-    if( $authUser = User::where('email', $facebookUser->email)->first()){
+    if ( $authUser = User::where('email', $facebookUser->email)->first()){
 
 
-        if( ! $authUser->facebook_id == $facebookUser->id){
+        if ( ! $authUser->facebook_id == $facebookUser->id){
 
             throw new EmailAlreadyInSystemException;
         }
@@ -53,15 +53,16 @@ private function findOrCreateUser($facebookUser)
 
     }
 
-    //create user if not already exists and email does not already exist.
 
-    $password = $this->makePassword();
 
-    if(User::where('facebook_id', '=', $facebookUser->id)->first()){
-
+    if (User::where('facebook_id', '=', $facebookUser->id)->first()){
 
         throw new CredentialsDoNotMatchException;
     }
+
+    //create user if not already exists and email does not already exist.
+
+    $password = $this->makePassword();
 
     return User::create([
         'name' => $facebookUser->name,
@@ -88,9 +89,7 @@ private function userSyncedOrSync($facebookUser)
 {
     //if you are logged in and emails match, you are already synced
 
-    if($this->userSynced($facebookUser)){
-
-
+    if ($this->userSynced($facebookUser)){
 
         throw new AlreadySyncedException;
 
@@ -131,7 +130,7 @@ private function redirectUser()
 {
     if (Auth::user()->isAdmin()){
 
-        return redirect()->route('admin.index');
+        return redirect()->route('admin');
     }
 
     return redirect()->route('home');

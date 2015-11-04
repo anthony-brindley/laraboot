@@ -62,41 +62,34 @@ class Handler extends ExceptionHandler
                 break;
 
             case ($e instanceof UnauthorizedException):
-
                 return $this->renderException($e);
                 break;
 
             case ($e instanceof NoActiveAccountException):
-
                 return $this->renderException($e);
                 break;
 
             case ($e instanceof ConnectionNotAcceptedException):
-
                 return $this->renderException($e);
                 break;
 
             case ($e instanceof EmailNotProvidedException):
-
                 return $this->renderException($e);
                 break;
 
             case ($e instanceof EmailAlreadyInSystemException):
-
                 return $this->renderException($e);
                 break;
 
             case ($e instanceof AlreadySyncedException):
+                return $this->renderException($e);
+                break;
 
+            case ($e instanceof CredentialsDoNotMatchException):
                 return $this->renderException($e);
                 break;
 
             default:
-
-            case ($e instanceof CredentialsDoNotMatchException):
-
-                return $this->renderException($e);
-                break;
 
                 return parent::render($request, $e);
 
@@ -148,6 +141,8 @@ class Handler extends ExceptionHandler
             default:
                 return (new SymfonyDisplayer(config('app.debug')))
                     ->createResponse($e);
+
+
 
         }
 

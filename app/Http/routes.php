@@ -17,6 +17,8 @@ Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 
 // API routes
 
+Route::any('api/profile', 'ApiController@profileData');
+Route::any('api/user', 'ApiController@userData');
 Route::any('api/widget', 'ApiController@widgetData');
 
 // Authentication routes
@@ -37,6 +39,13 @@ Route::get('/', ['as' => 'home', 'uses' => 'PagesController@index']);
 Route::get('privacy', 'PagesController@privacy');
 Route::get('termsofservice', 'PagesController@terms');
 
+// Profile Routes
+
+Route::get('show-profile', ['as' => 'show-profile', 'uses' => 'ProfileController@showProfileToUser']);
+Route::get('my-profile', ['as' => 'my-profile', 'uses' => 'ProfileController@myProfile']);
+Route::resource('profile', 'ProfileController');
+
+
 // Socialite routes
 
 Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
@@ -51,6 +60,8 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 //Route::get('test','TestController@index');
 Route::get('test',  ['middleware' => 'auth', 'uses' => 'TestController@index']);
+
+Route::resource('user', 'UserController');
 
 // widget routes
 
