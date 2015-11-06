@@ -46,6 +46,7 @@
                            {{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/my-profile">Profile</a></li>
+                            <li><a href="/settings">Settings</a></li>
                             <li>
                                 <a href="/auth/facebook">
                                     <i class="fa fa-facebook"></i>&nbsp;&nbsp; Sync </a>

@@ -45,6 +45,10 @@ Route::get('show-profile', ['as' => 'show-profile', 'uses' => 'ProfileController
 Route::get('my-profile', ['as' => 'my-profile', 'uses' => 'ProfileController@myProfile']);
 Route::resource('profile', 'ProfileController');
 
+// Settings routes
+
+Route::get('settings', 'SettingsController@edit');
+Route::post('settings', ['as' => 'userUpdate', 'uses' => 'SettingsController@update']);
 
 // Socialite routes
 
@@ -60,6 +64,8 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 //Route::get('test','TestController@index');
 Route::get('test',  ['middleware' => 'auth', 'uses' => 'TestController@index']);
+
+// User Routes
 
 Route::resource('user', 'UserController');
 

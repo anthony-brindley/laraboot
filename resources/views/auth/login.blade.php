@@ -9,6 +9,12 @@
 
                 {!! Breadcrumb::withLinks(['Home' => '/', 'Login']) !!}
 
+                <div class="baseMargin">
+
+                    <a href="/auth/facebook"><button type="button" class="btn btn-primary btn-lg btn-block">Facebook Sign In</button></a>
+
+                </div>
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Login</div>
                     <div class="panel-body">
