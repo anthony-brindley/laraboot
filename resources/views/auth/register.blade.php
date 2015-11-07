@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><a href="/termsofservice">Agree To Terms</a></label>
+                                <label class="col-md-4 control-label"><a href="/terms-of-service">Agree To Terms</a></label>
                                 <div class="col-md-6">
                                     <input type="checkbox"  name="terms" required>
                                 </div>

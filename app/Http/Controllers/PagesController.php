@@ -27,7 +27,7 @@ class PagesController extends Controller
 
     public function terms()
     {
-        return view('pages.termsofservice');
+        return view('pages.terms-of-service');
     }
 
     /**

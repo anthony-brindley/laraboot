@@ -37,7 +37,7 @@ Route::controllers([
 
 Route::get('/', ['as' => 'home', 'uses' => 'PagesController@index']);
 Route::get('privacy', 'PagesController@privacy');
-Route::get('termsofservice', 'PagesController@terms');
+Route::get('terms-of-service', 'PagesController@terms');
 
 // Profile Routes
 

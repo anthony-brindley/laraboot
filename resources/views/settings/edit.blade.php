@@ -47,7 +47,7 @@
 
         <div class="form-group">
 
-            {!! Form::submit('Update User Settings', array('class'=>'btn btn-primary')) !!}
+            {!! Form::submit('Update User Settings', ['class'=>'btn btn-primary']) !!}
 
         </div>
 

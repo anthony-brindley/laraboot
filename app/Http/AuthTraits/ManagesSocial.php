@@ -87,7 +87,7 @@ private function makePassword()
 
 private function userSyncedOrSync($facebookUser)
 {
-    //if you are logged in and emails match, you are already synced
+    //if you are logged in and userSynced is true, you are already synced
 
     if ($this->userSynced($facebookUser)){
 
