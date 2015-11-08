@@ -18,8 +18,8 @@ class WidgetController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth', ['except' => ['index', 'show']] );
-        $this->middleware('admin');
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('admin', ['except' => ['index', 'show']]);
 
 
     }
