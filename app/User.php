@@ -12,12 +12,13 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
+use App\Http\AuthTraits\OwnsRecord;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, HasModelTrait;
+    use Authenticatable, Authorizable, CanResetPassword, HasModelTrait, OwnsRecord;
 
     /**
      * The database table used by the model.

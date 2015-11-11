@@ -18,7 +18,7 @@ class WidgetController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => 'index']);
         $this->middleware('admin', ['except' => ['index', 'show']]);
 
 
@@ -87,6 +87,7 @@ class WidgetController extends Controller
 
             return Redirect::route('widget.show', ['id' => $widget->id, 'slug' => $widget->slug], 301);
         }
+
 
         return view('widget.show', compact('widget'));
     }
