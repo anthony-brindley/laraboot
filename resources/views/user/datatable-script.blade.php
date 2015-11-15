@@ -1,3 +1,4 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 <script>
     $(document).ready( function () {
 
@@ -46,13 +47,14 @@
                 },
                 { "data": "created_at",
                     "render": function ( data, type, full, meta ) {
-                        var d = new Date(data);
-                        var month = d.getMonth() +1 < 10 ? "0" + (d.getMonth() +1): d.getMonth() +1;
-                        var day = d.getDate() < 10 ? "0" + d.getDate(): d.getDate();
-                        return month + "/" + day + "/" + d.getFullYear();
+
+                        // instantiate a moment object and hand it the string date
+                        var d = moment(data);
+
+                        var month = d.month() +1 < 10 ? "0" + (d.month() +1) : d.month() +1;
+                        var day = d.date()  < 10 ? "0" + (d.date()): d.date();
+                        return month + "/" + day + "/" + d.year();
                     }
-
-
                 },
                 {"defaultContent": "null", "render": function(data,type,row,meta) {
                     return '<a href="/user/'+row.id+'/edit">'+ '<button>Edit</button>' + '</a>';
