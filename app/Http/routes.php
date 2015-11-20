@@ -17,6 +17,7 @@ Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 
 // API routes
 
+Route::any('api/marketing-image', 'ApiController@marketingImageData');
 Route::any('api/profile', 'ApiController@profileData');
 Route::any('api/user', 'ApiController@userData');
 Route::any('api/widget', 'ApiController@widgetData');
@@ -32,6 +33,10 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
+
+// marketing image routes
+
+Route::resource('marketing-image', 'MarketingImageController');
 
 // pages routes
 

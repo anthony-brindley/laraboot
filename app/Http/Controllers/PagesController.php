@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use DB;
 class PagesController extends Controller
 {
     /**
@@ -15,7 +15,19 @@ class PagesController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+
+        $featuredImage = DB::table('marketing_images')->where('is_featured', 1)
+                                                      ->where('is_active', 1)
+                                                      ->first();
+
+        $activeImages = DB::table('marketing_images')->where('is_featured', 0)
+                                                     ->where('is_active', 1)
+                                                     ->orderBy('image_weight', 'asc')
+                                                     ->get();
+
+        $count = count($activeImages);
+
+        return view('pages.index', compact('featuredImage', 'activeImages', 'count'));
     }
 
 

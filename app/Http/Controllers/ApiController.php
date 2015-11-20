@@ -10,6 +10,23 @@ use DB;
 class ApiController extends Controller
 {
 
+    public function marketingImageData()
+    {
+
+        $result['data'] = DB::table('marketing_images')
+            ->select('id',
+                     'image_name',
+                     'image_extension',
+                     'is_active',
+                     'is_featured',
+                     'image_weight',
+                     'created_at')
+            ->get();
+
+        return json_encode($result);
+
+    }
+
     public function profileData()
     {
 
